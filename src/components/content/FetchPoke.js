@@ -1,4 +1,5 @@
 import React, { Component, useState, useEffect } from 'react'
+import PokeCard from './PokeCard'
 
 const FetchPoke = () => {
 
@@ -17,7 +18,9 @@ const FetchPoke = () => {
             .then(response => response.json())
             .then((pokeData) => {
                 console.log(pokeData)
-                setStatuses(pokeData.forms)
+                setStatuses(statuses => [...statuses,pokeData])
+                console.log(statuses)
+                
                 
             })
     }
@@ -36,7 +39,8 @@ const FetchPoke = () => {
     return (
         <div>
             {statuses && statuses.map(status => (
-               <p> {status.name}</p>
+         
+               <PokeCard data = {status} key = {status.id}/>
 
             ))}
 

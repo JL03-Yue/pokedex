@@ -1,0 +1,24 @@
+.content-wrap{
+    /* background-color: aqua;  */
+    justify-content: center;
+    display:flex;
+    width:90%;
+    margin:0 auto;
+
+}
+
+.pokecard-wrap{
+    flex-direction: row;
+    /* background-color: bisque; */
+    width:98%;
+    justify-content: center;
+    display:flex;
+}
+
+.pokecard-wrap >div{
+    /* background-color: red; */
+    display:flex;
+    justify-content: center;
+    flex:1;
+    flex-flow: row wrap;
+}
