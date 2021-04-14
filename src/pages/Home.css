@@ -1,0 +1,10 @@
+.home-wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    background-image: url(../assets//background.jpg);
+    background-position: center;
+}
+
