@@ -2,6 +2,7 @@ import React, { Component, useState, useEffect } from 'react'
 import PokeCard from './PokeCard'
 import Pagination from '@material-ui/lab/Pagination';
 import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
     paginator: {
@@ -10,9 +11,10 @@ const useStyles = makeStyles((theme) => ({
       }
 }));
 
-const FetchPoke = () => {
+const FetchPoke = ({searchFilter}) => {
 
     const [statuses, setStatuses] = useState([]);
+    const [filter, setFilter] = useState('')
 
     const classes = useStyles();
     const itemsPerPage = 15;
@@ -20,6 +22,13 @@ const FetchPoke = () => {
     const [noOfPages] = useState(
         Math.ceil(100 / itemsPerPage)
     );
+
+
+    const handleSearchChange = (e) =>{
+        setFilter(e.target.value);
+        
+
+    }
 
     function handleChange(event, value) {
         setPage(value);
@@ -58,13 +67,11 @@ const FetchPoke = () => {
 
     return (
         <div>
-
             { statuses && statuses
             .slice((page - 1) * itemsPerPage, page * itemsPerPage)
             .map(status => (
-
+                status.forms[0].name.includes(searchFilter) &&
                 <PokeCard data={status} key={status.id} />
-
             ))}
 
             <Pagination

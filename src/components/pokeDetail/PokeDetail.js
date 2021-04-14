@@ -52,6 +52,11 @@ export default function PokeDetailCard({ data }) {
                         <p>Move: {data.moves[0].move.name}</p>
                     </Typography>
 
+
+                    <Typography gutterBottom variant="body2" component="p">
+                        <p>Height: {data.height}</p>
+                    </Typography>
+
                     <Typography gutterBottom variant="body2" component="p">
                         <p>Weight: {data.weight}</p>
                     </Typography>
