@@ -1,3 +1,4 @@
+import { Healing, LocalConvenienceStoreOutlined } from '@material-ui/icons';
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firebase-firestore'
@@ -22,22 +23,58 @@ class Firebase {
 
 
     login(email, password) {
-        return this.auth.signInWithEmailAndPassword(email, password)
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                // Signed in
+                var user = userCredential.user;
+                console.log(111, user)
+                // ...
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+            });
     }
+
+
 
     logout() {
         return this.auth.signOut()
     }
 
+    async resetPassword(emailAddress) {
+
+        var auth = firebase.auth();
+        auth.fetchSignInMethodsForEmail(emailAddress)
+            .then(result => {
+                console.log('sen',result)
+
+                if (result.length > 0) {
+                    auth.sendPasswordResetEmail(emailAddress)
+                    .then(res=>{
+                        console.log('send ok')
+                    })
+                    .catch((error) => {
+                        console.log("Error Sending Email", error);
+                    });
+                }
+            })
+            .catch(function (error) {
+                // An error happened.
+            });
+    }
+
     async register(name, email, password) {
         console.log('enter register in firebase.js')
-        await firebase.auth().createUserWithEmailAndPassword(email, password)
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(res => {
+                firebase.auth().currentUser.updateProfile({
+                    displayName: name
+                })
+            })
             .catch((error) => {
                 console.log(error.message);
             })
-        return this.auth.currentUser.updateProfile({
-            displayName: name
-        })
     }
 
     // addPokeman(pokeman){

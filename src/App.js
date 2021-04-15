@@ -15,10 +15,10 @@ function App() {
      
       <Router>
                 <div className="navbar">
-                    <nav className="link-container">
+                    {/* <nav className="link-container">
                         <Link to="/" className="link">Home</Link>
                         <Link to="/landing" className="link">Landing</Link>
-                    </nav>
+                    </nav> */}
                     <Switch>
                         <Route path="/" exact component={HomePage} />
                         <Route path="/landing" component={LandingPage} />

@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SearchIcon from '@material-ui/icons/Search';
+import Firebase from '../../firebase'
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -75,10 +77,23 @@ const useStyles = makeStyles((theme) => ({
 export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
   const menuId = 'primary-search-account-menu';
+  const his = useHistory();
   
   function handleSearchBarChange (e){
     props.setFilter(e.target.value);
   }
+
+  async function handleSignOut(){
+    try{
+      await Firebase.logout();
+      his.push('/') //查his
+      
+    }catch(error){
+      alert(error.message)
+    }
+  }
+
+ 
 
   return (
     <div className={classes.grow}>
@@ -118,7 +133,7 @@ export default function PrimarySearchAppBar(props) {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-            //   onClick={handleProfileMenuOpen}
+              onClick={handleSignOut}
               color="inherit"
             >
 

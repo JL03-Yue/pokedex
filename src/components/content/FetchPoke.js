@@ -7,11 +7,11 @@ import TextField from '@material-ui/core/TextField';
 const useStyles = makeStyles((theme) => ({
     paginator: {
         justifyContent: "center",
-        padding: "20px"
-      }
+        padding: "20px",
+    }
 }));
 
-const FetchPoke = ({searchFilter}) => {
+const FetchPoke = ({ searchFilter }) => {
 
     const [statuses, setStatuses] = useState([]);
     const [filter, setFilter] = useState('')
@@ -24,9 +24,9 @@ const FetchPoke = ({searchFilter}) => {
     );
 
 
-    const handleSearchChange = (e) =>{
+    const handleSearchChange = (e) => {
         setFilter(e.target.value);
-        
+
 
     }
 
@@ -68,27 +68,25 @@ const FetchPoke = ({searchFilter}) => {
     return (
         <div>
             { statuses && statuses
-            .slice((page - 1) * itemsPerPage, page * itemsPerPage)
-            .map(status => (
-                status.forms[0].name.includes(searchFilter) &&
-                <PokeCard data={status} key={status.id} />
-            ))}
+                .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+                .map(status => (
+                    status.forms[0].name.includes(searchFilter) &&
+                    <PokeCard data={status} key={status.id} />
+                ))}
 
-            <Pagination
-                count={noOfPages}
-                page={page}
-                onChange={handleChange}
-                defaultPage={1}
-                color="secondary"
-                size="large"
-                showFirstButton
-                showLastButton
-                classes={{ ul: classes.paginator }}
-            />
-
-
-
-
+            <div>
+                <Pagination
+                    count={noOfPages}
+                    page={page}
+                    onChange={handleChange}
+                    defaultPage={1}
+                    color="secondary"
+                    size="large"
+                    showFirstButton
+                    showLastButton
+                    classes={{ ul: classes.paginator }}
+                />
+            </div>
         </div>
     )
 

@@ -13,7 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Firebase from '../../firebase.js'
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -41,15 +42,15 @@ export default function SignUp(props) {
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
   const [Pokeman, setPokeman] = useState('');
+  const his = useHistory() 
 
 
   async function onRegister() {
-    debugger;
     try {
       console.log('enter onRegister')
       await Firebase.register(Name, Email, Password);
       console.log('pass firebase register')
-      props.history.replace('/landing')
+      // his.push('/landing') //查his
     } catch (error) {
       alert(error.message)
     }
@@ -138,13 +139,13 @@ export default function SignUp(props) {
             Sign Up
           </Button>
 
-          <Grid container justify="flex-end">
+          {/* <Grid container justify="flex-end">
             <Grid item>
               <Link href="#" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
-          </Grid>
+          </Grid> */}
         </form>
       </div>
     </Container>

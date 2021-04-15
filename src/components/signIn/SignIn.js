@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import firebase from '../../firebase'
+import { useHistory } from 'react-router-dom'
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,15 +40,25 @@ export default function SignIn() {
   const classes = useStyles();
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
+  const his = useHistory();
 
+  async function resentPassword() {
+    try {
+      await firebase.resetPassword(Email);
 
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+  async function login() {
+    try {
+      await firebase.login(Email, Password);
+      console.log(his);
+      his.push('/landing')
 
-  async function login(){
-      try{
-          await firebase.login(Email, Password)
-      }catch(error){
-          alert(error.message)
-      }
+    } catch (error) {
+      alert(error.message)
+    }
   }
 
   return (
@@ -63,7 +75,7 @@ export default function SignIn() {
         <form className={classes.form} noValidate>
 
 
-            {/* email */}
+          {/* email */}
           <TextField
             variant="outlined"
             margin="normal"
@@ -75,7 +87,7 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
-            onChange = {e=>setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
           />
 
           {/* password */}
@@ -83,14 +95,14 @@ export default function SignIn() {
             variant="outlined"
             margin="normal"
             required
-            value = {Password}
+            value={Password}
             fullWidth
             name="password"
             label="Password"
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange = {e=>setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -108,9 +120,9 @@ export default function SignIn() {
           </Button>
 
 
-          <Grid container>
+          {/* <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href="#" variant="body2" onClick={resentPassword}>
                 Forgot password?
               </Link>
             </Grid>
@@ -119,7 +131,7 @@ export default function SignIn() {
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
-          </Grid>
+          </Grid> */}
         </form>
       </div>
     </Container>
